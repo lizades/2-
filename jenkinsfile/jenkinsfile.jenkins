@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+		stage ('Clone') {
+			steps {
+				bat 'C:\\Users\\mac\\Desktop\\JavaRep\\clone.bat'
+			}
+		}
+        stage('Build&Test') {
+            steps {
+                bat 'C:\\Users\\mac\\Desktop\\CloneJavaRep\\JavaRep\\build.bat'
+            }
+        }
+		stage('Archive') {
+			steps {
+				zip zipFile: 'C:/Users/mac/Desktop/' + env.BUILD_NUMBER.toString() + '.zip', dir: 'C:\Users\mac\Desktop\JavaRep\target\spring-petclinic-2.5.0-SNAPSHOT.jar'
+			}
+		}
+		stage('Deploy') {
+			steps {
+				unzip zipFile: 'C:/Users/mac/Desktop/' + env.BUILD_NUMBER.toString() + '.zip', dir: 'C:/Users/mac/Desktop/DeployedJavaBuilds/' + env.BUILD_NUMBER.toString()
+			}
+		}
+    }
+	
+	post { 
+		always { 
+			emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}", recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}" 
+		} 
+	}
+}
