@@ -14,7 +14,7 @@ pipeline {
 //        }
 		stage('Archive') {
 			steps {
-				zip zipFile: 'C:/Users/mac/Desktop/' + env.BUILD_NUMBER.toString() + '.zip', file: 'C:/Users/mac/Desktop/JavaRep/target/spring-petclinic-2.5.0-SNAPSHOT.jar'
+				zip zipFile: 'C:/Users/mac/Desktop/' + env.BUILD_NUMBER.toString() + '.zip', dir: 'C:/Users/mac/Desktop/JavaRep/target/'
 			}
 		}
 		stage('Deploy') {
