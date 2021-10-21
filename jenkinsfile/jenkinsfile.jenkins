@@ -7,11 +7,11 @@ pipeline {
 				bat 'C:\\Users\\mac\\Desktop\\JavaRep\\clone.bat'
 			}
 		}
-//        stage('Build&Test') {
-//            steps {
-//                bat 'C:\\Users\\mac\\Desktop\\CloneJavaRep\\JavaRep\\build.bat'
-//            }
-//        }
+        stage('Build&Test') {
+            steps {
+                bat 'C:\\Users\\mac\\Desktop\\CloneJavaRep\\JavaRep\\build.bat'
+            }
+        }
 		stage('Archive') {
 			steps {
 				zip zipFile: 'C:/Users/mac/Desktop/' + env.BUILD_NUMBER.toString() + '.zip', dir: 'C:/Users/mac/Desktop/JavaRep/target/'
