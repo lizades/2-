@@ -47,7 +47,6 @@ class ValidatorTests {
 		Person person = new Person();
 		person.setFirstName("");
 		person.setLastName("smith");
-		// person.setAge(21);
 
 		Validator validator = createValidator();
 		Set<ConstraintViolation<Person>> constraintViolations = validator.validate(person);
@@ -56,7 +55,14 @@ class ValidatorTests {
 		ConstraintViolation<Person> violation = constraintViolations.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("firstName");
 		assertThat(violation.getMessage()).isEqualTo("must not be empty");
-		// assertThat(violation.getPropertyPath().toString()).isEqualTo("age");
+	}
+
+	@Test
+	void validateAge() {
+		Person person = new Person();
+		person.setAge(21);
+
+		assertThat(person.getAge() >= 18);
 	}
 
 }
