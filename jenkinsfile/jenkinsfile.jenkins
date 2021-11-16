@@ -2,24 +2,21 @@ pipeline {
     agent any
 
     stages {
-		stage ('Clone') {
-			steps {
-				bat 'C:\\Users\\mac\\Desktop\\JavaRep\\clone.bat'
-			}
-		}
         stage('Build&Test') {
             steps {
-                bat 'C:\\Users\\mac\\Desktop\\CloneJavaRep\\JavaRep\\build.bat'
+                bat '%JENKINS_HOME%\\workspace\\Practice2\\build.bat'
             }
         }
+		
 		stage('Archive') {
 			steps {
-				zip zipFile: 'C:/Users/mac/Desktop/' + env.BUILD_NUMBER.toString() + '.zip', dir: 'C:/Users/mac/Desktop/JavaRep/target/'
+				zip zipFile: '%JENKINS_HOME%/workspace/Practice2_BUILDS' + env.BUILD_NUMBER.toString() + '.zip', dir: '%JENKINS_HOME%/workspace/Practice2/target'
 			}
 		}
+		
 		stage('Deploy') {
 			steps {
-				unzip zipFile: 'C:/Users/mac/Desktop/' + env.BUILD_NUMBER.toString() + '.zip', dir: 'C:/Users/mac/Desktop/DeployedJavaBuilds/' + env.BUILD_NUMBER.toString()
+				unzip zipFile: '%JENKINS_HOME%/workspace/Practice2_BUILDS' + env.BUILD_NUMBER.toString() + '.zip', dir: '%JENKINS_HOME%/workspace/Practice2_BUILDS/DeployedBuilds/' + env.BUILD_NUMBER.toString()
 			}
 		}
     }
