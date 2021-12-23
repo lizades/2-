@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.model;
 
+import org.junit.Test;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Min;
@@ -26,7 +28,7 @@ import javax.validation.constraints.NotEmpty;
  * @author Ken Krebs
  */
 @MappedSuperclass
-public class Person extends BaseEntity {
+public class Person <String> extends BaseEntity {
 
 	@Column(name = "first_name")
 	@NotEmpty
@@ -66,9 +68,9 @@ public class Person extends BaseEntity {
 
 	@Test
 	void validateAge(){
-		Rerson person = new Person();
-		person.setAge(20);
+		Person person = new Person();
+		person.setAge(17);
 
-		assertThat(person.getAge()>=18 && person.getAge()<=145);
+		assertThat(person.getAge()>=18);
 	}
 }
