@@ -64,4 +64,11 @@ public class Person extends BaseEntity {
 		this.age = age;
 	}
 
+	@Test
+	void validateAge(){
+		Rerson person = new Person();
+		person.setAge(20);
+
+		assertThat(person.getAge()>=18 && person.getAge()<=145);
+	}
 }
